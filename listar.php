@@ -69,11 +69,15 @@
                       while ($row = pg_fetch_assoc($result)) {
                           echo "<tr>";
                           echo "<td>" . $counter++ . "</td>";
-                          echo "<td>" . htmlspecialchars($row['doc']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['nom']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['ape']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['dir']) . "</td>";
-                          echo "<td>" . htmlspecialchars($row['cel']) . "</td>";
+                          // Usar índices numéricos si los nombres de columnas no coinciden
+                          $values = array_values($row);
+                          for ($i = 0; $i < count($values) && $i < 5; $i++) {
+                              echo "<td>" . htmlspecialchars($values[$i]) . "</td>";
+                          }
+                          // Rellenar con celdas vacías si hay menos columnas
+                          for ($i = count($values); $i < 5; $i++) {
+                              echo "<td>-</td>";
+                          }
                           echo "<td>";
                           echo "<a href='#' class='btn btn-sm btn-primary'>Editar</a> ";
                           echo "<a href='#' class='btn btn-sm btn-danger'>Eliminar</a>";
