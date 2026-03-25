@@ -41,7 +41,7 @@
           if (!$con) {
               echo "<div class='alert alert-danger'>Error al conectar con la base de datos</div>";
           } else {
-              $sql = "SELECT * FROM persona ORDER BY id";
+              $sql = "SELECT * FROM persona";
               $result = pg_query($con, $sql);
 
               if (!$result) {
@@ -54,7 +54,7 @@
                       echo "<table class='table table-striped table-bordered'>";
                       echo "<thead class='thead-dark'>";
                       echo "<tr>";
-                      echo "<th>ID</th>";
+                      echo "<th>#</th>";
                       echo "<th>Documento</th>";
                       echo "<th>Nombre</th>";
                       echo "<th>Apellido</th>";
@@ -65,9 +65,10 @@
                       echo "</thead>";
                       echo "<tbody>";
 
+                      $counter = 1;
                       while ($row = pg_fetch_assoc($result)) {
                           echo "<tr>";
-                          echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                          echo "<td>" . $counter++ . "</td>";
                           echo "<td>" . htmlspecialchars($row['doc']) . "</td>";
                           echo "<td>" . htmlspecialchars($row['nom']) . "</td>";
                           echo "<td>" . htmlspecialchars($row['ape']) . "</td>";
