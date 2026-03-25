@@ -41,7 +41,7 @@
           if (!$con) {
               echo "<div class='alert alert-danger'>Error al conectar con la base de datos</div>";
           } else {
-              $sql = "SELECT * FROM persona";
+              $sql = "SELECT * FROM persona ORDER BY idpersona";
               $result = pg_query($con, $sql);
 
               if (!$result) {
@@ -54,7 +54,7 @@
                       echo "<table class='table table-striped table-bordered'>";
                       echo "<thead class='thead-dark'>";
                       echo "<tr>";
-                      echo "<th>#</th>";
+                      echo "<th>ID</th>";
                       echo "<th>Documento</th>";
                       echo "<th>Nombre</th>";
                       echo "<th>Apellido</th>";
@@ -65,19 +65,14 @@
                       echo "</thead>";
                       echo "<tbody>";
 
-                      $counter = 1;
                       while ($row = pg_fetch_assoc($result)) {
                           echo "<tr>";
-                          echo "<td>" . $counter++ . "</td>";
-                          // Usar índices numéricos si los nombres de columnas no coinciden
-                          $values = array_values($row);
-                          for ($i = 0; $i < count($values) && $i < 5; $i++) {
-                              echo "<td>" . htmlspecialchars($values[$i]) . "</td>";
-                          }
-                          // Rellenar con celdas vacías si hay menos columnas
-                          for ($i = count($values); $i < 5; $i++) {
-                              echo "<td>-</td>";
-                          }
+                          echo "<td>" . htmlspecialchars($row['idpersona'] ?? '') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['documento'] ?? '') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['nombre'] ?? '') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['apellido'] ?? '') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['direccion'] ?? '') . "</td>";
+                          echo "<td>" . htmlspecialchars($row['celular'] ?? '') . "</td>";
                           echo "<td>";
                           echo "<a href='#' class='btn btn-sm btn-primary'>Editar</a> ";
                           echo "<a href='#' class='btn btn-sm btn-danger'>Eliminar</a>";
